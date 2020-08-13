@@ -1,0 +1,12 @@
+
+service: opensopt-api
+app: sls-app
+org: matheusdaluzcosta
+
+provider:
+  name: aws
+  runtime: python2.7
+
+functions:
+  hello:
+    handler: handler.get_autoscale_groups_openspot
