@@ -1,0 +1,1 @@
+# openspot-asg-scanner-Python-0-0-0-0-Updated-37-minutes-ago-openspot-api
