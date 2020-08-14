@@ -1,15 +1,20 @@
 import boto3
 import json
-
+import datetime
 
 as_group_client = boto3.client(
     'autoscaling'
 )
 
 
+def default(o):
+    if isinstance(o, (datetime.date, datetime.datetime)):
+        return o.isoformat()
+
+
 def get_autoscale_groups_openspot(event, context):
     as_groups = as_group_client.describe_auto_scaling_groups()
-    return json.dumps(as_groups, default=str)
+    return json.dumps(as_groups, default=default)
 
 
 def enable_openspot_in_autoscale(event, context):
