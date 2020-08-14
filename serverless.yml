@@ -8,5 +8,7 @@ provider:
   runtime: python2.7
 
 functions:
-  hello:
+  get:
     handler: handler.get_autoscale_groups_openspot
+  enable:
+     handler: handler.enable_openspot_in_autoscale
