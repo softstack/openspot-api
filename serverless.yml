@@ -3,12 +3,23 @@ service: opensopt-api
 app: sls-app
 org: matheusdaluzcosta
 
+plugins:
+  - serverless-offline
+
 provider:
   name: aws
   runtime: python2.7
 
 functions:
-  get:
+  getAutoScaleGroups:
     handler: handler.get_autoscale_groups_openspot
+    events:
+      - http:
+          path: /asgroups
+          method: get
   enable:
      handler: handler.enable_openspot_in_autoscale
+     events:
+       - http:
+           path: /asgroups/openspot/enable
+           method: put

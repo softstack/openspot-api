@@ -1,4 +1,6 @@
 import boto3
+import json
+
 
 as_group_client = boto3.client(
     'autoscaling'
@@ -7,24 +9,20 @@ as_group_client = boto3.client(
 
 def get_autoscale_groups_openspot(event, context):
     as_groups = as_group_client.describe_auto_scaling_groups()
-    return as_groups
+    return json.dumps(as_groups, default=str)
 
 
 def enable_openspot_in_autoscale(event, context):
-
-    openspot_status = event['data']['openspot']
-
+    body = json.loads(event['body'])
     response = as_group_client.create_or_update_tags(
         Tags=[
             {
-                'ResourceId':  event['data']['ResourceId'],
+                'ResourceId': body.get('auto-scaling-group-name'),
                 'ResourceType': 'auto-scaling-group',
                 'Key': 'openspot',
-                'Value': openspot_status,
+                'Value': body.get('openspot'),
                 'PropagateAtLaunch': True
             },
         ])
 
     return response
-
-
